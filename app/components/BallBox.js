@@ -26,15 +26,6 @@ class BallBox extends Container {
         this.trailSprite.anchorX = this.trailSprite.anchorY = 0;
         this.addChild(this.trailSprite);
 
-        // Object to make the fade-out effects
-        this.fadeCanvas = document.createElement('canvas');
-        this.fadeCanvas.width = this.width;
-        this.fadeCanvas.height = this.height;
-
-        const fadeContext = this.fadeCanvas.getContext('2d');
-        fadeContext.fillStyle = 'rgba(0, 0, 0, 0.1)';
-        fadeContext.fillRect(0, 0, this.width, this.height);
-
         // The container that holds all the balls
         this.ballContainer = new Container();
         this.addChild(this.ballContainer);
@@ -59,11 +50,9 @@ class BallBox extends Container {
     }
 
     animationStep (delta) {
-        // Apply a fade-out effect on the trails
-        this.trailContext.drawImage(this.fadeCanvas, 0, 0);
-
         // Moves each ball, also drawing the trails
         this.balls.forEach((ball) => {
+            this.trailContext.globalAlpha = 1;
             this.trailContext.beginPath();
             this.trailContext.strokeStyle = ball.color;
             this.trailContext.lineWidth = 2 * ball.radius;
@@ -83,6 +72,10 @@ class BallBox extends Container {
             this.trailContext.lineTo(ball.x, ball.y);
             this.trailContext.stroke();
         });
+
+        // Applies a fade effect
+        this.trailContext.globalAlpha = 0.1;
+        this.trailContext.fillRect(0, 0, this.width, this.height);
 
         // Removes the balls that fell off screen
         const offBalls = this.balls.filter(ball => (ball.y - ball.radius) >= this.height);
