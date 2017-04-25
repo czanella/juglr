@@ -1,0 +1,38 @@
+{
+  "name": "weback-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "sh set_header.sh FRONT; NODE_ENV=development webpack-dev-server --progress",
+    "analyzer": "sh set_header.sh FRONT; NODE_ENV=development ANALYZER=yes webpack-dev-server --progress",
+    "build": "rm -rf build;NODE_ENV=production webpack --config ./webpack.production.config.js --progress",
+    "clean": "rm -rf build"
+  },
+  "author": "Carlos Zanella",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-preset-airbnb": "^2.2.3",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "exports-loader": "^0.6.3",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "imports-loader": "^0.6.5",
+    "json-loader": "^0.5.4",
+    "webpack": "^1.13.2",
+    "webpack-bundle-analyzer": "^2.4.0",
+    "webpack-dev-server": "^1.15.0"
+  },
+  "dependencies": {
+    "es6-promise": "^3.3.1",
+    "gsap": "^1.19.1",
+    "preload-js": "^0.6.3",
+    "whatwg-fetch": "^1.0.0"
+  }
+}
