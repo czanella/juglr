@@ -51,8 +51,9 @@ class BallBox extends Container {
 
     animationStep (delta) {
         // Moves each ball, also drawing the trails
+        this.trailContext.globalAlpha = 1;
+
         this.balls.forEach((ball) => {
-            this.trailContext.globalAlpha = 1;
             this.trailContext.beginPath();
             this.trailContext.strokeStyle = ball.color;
             this.trailContext.lineWidth = 2 * ball.radius;
