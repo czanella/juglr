@@ -1,9 +1,8 @@
 import {
-    Sprite,
-    Container,
+    Sprite
 } from '../lightpixel';
 
-class BallBox extends Container {
+class BallBox extends Sprite {
     constructor (width, height, gravityX, gravityY) {
         super();
 
@@ -14,21 +13,15 @@ class BallBox extends Container {
         this.balls = [];
 
         // The background where the ball trails are drawn
-        this.trailCanvas = document.createElement('canvas');
-        this.trailCanvas.width = this.width;
-        this.trailCanvas.height = this.height;
+        this.texture = document.createElement('canvas');
+        this.texture.width = this.width;
+        this.texture.height = this.height;
 
-        this.trailContext = this.trailCanvas.getContext('2d');
+        this.trailContext = this.texture.getContext('2d');
         this.trailContext.fillStyle = '#000000';
-        this.trailContext.fillRect(0, 0, this.trailCanvas.width, this.trailCanvas.height);
+        this.trailContext.fillRect(0, 0, this.texture.width, this.texture.height);
 
-        this.trailSprite = new Sprite(this.trailCanvas);
-        this.trailSprite.anchorX = this.trailSprite.anchorY = 0;
-        this.addChild(this.trailSprite);
-
-        // The container that holds all the balls
-        this.ballContainer = new Container();
-        this.addChild(this.ballContainer);
+        this.anchorX = this.anchorY = 0;
     }
 
     addBall (ball) {
@@ -36,7 +29,6 @@ class BallBox extends Container {
 
         if (ballIndex < 0) {
             this.balls.push(ball);
-            this.ballContainer.addChild(ball);
         }
     }
 
@@ -45,7 +37,6 @@ class BallBox extends Container {
 
         if (ballIndex >= 0) {
             this.balls.splice(ballIndex, 1);
-            this.ballContainer.removeChild(ball);
         }
     }
 
