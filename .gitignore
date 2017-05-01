@@ -25,3 +25,6 @@ venv*/
 
 # Socket files
 *.sock
+
+# Visual Studio Code files
+.vscode
