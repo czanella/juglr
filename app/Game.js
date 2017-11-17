@@ -47,7 +47,7 @@ class Game {
         this.view.addEventListener('touchstart', this.onInteraction);
 
         // Builds the ballBox
-        this.ballBox = new BallBox(this.view.width, this.view.height, 0, 400);
+        this.ballBox = new BallBox(this.view.width, this.view.height, 0, 800);
         this.ballBox.on('mousedown', this.addBalls);
 
         this.startAnimation();

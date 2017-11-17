@@ -1,8 +1,8 @@
-import {
-    Sprite
-} from '../lightpixel';
+import { Sprite, Container } from '../lightpixel';
 
-class BallBox extends Sprite {
+const BLACK = '#000000';
+
+class BallBox extends Container {
     constructor (width, height, gravityX, gravityY) {
         super();
 
@@ -12,16 +12,30 @@ class BallBox extends Sprite {
         this.gravityY = gravityY;
         this.balls = [];
 
-        // The background where the ball trails are drawn
-        this.texture = document.createElement('canvas');
-        this.texture.width = this.width;
-        this.texture.height = this.height;
+        // const backgroundTexture = document.createElement('canvas');
+        // backgroundTexture.width = width;
+        // backgroundTexture.height = height;
+// 
+        // const backgroundContext = backgroundTexture.getContext('2d');
+        // backgroundContext.fillStyle = BLACK;
+        // backgroundContext.fillRect(0, 0, width, height);
+// 
+        // this.background = new Sprite(backgroundTexture);
+        // this.background.anchorX = this.background.anchorY = 0;
+        // this.addChild(this.background);
+    }
 
-        this.trailContext = this.texture.getContext('2d');
-        this.trailContext.fillStyle = '#000000';
-        this.trailContext.fillRect(0, 0, this.texture.width, this.texture.height);
+    drawOn(context) {
+        context.fillStyle = BLACK;
+        context.fillRect(0, 0, this.width, this.height);
+        super.drawOn(context);
+    }
 
-        this.anchorX = this.anchorY = 0;
+    propagateEvent(eventType, position, matrix = null) {
+        matrix = this.stackTransform(matrix);
+        this.emit(eventType, eventType, matrix.transform(position));
+
+        return true;
     }
 
     addBall (ball) {
@@ -29,6 +43,7 @@ class BallBox extends Sprite {
 
         if (ballIndex < 0) {
             this.balls.push(ball);
+            this.addChild(ball);
         }
     }
 
@@ -37,20 +52,14 @@ class BallBox extends Sprite {
 
         if (ballIndex >= 0) {
             this.balls.splice(ballIndex, 1);
+            this.removeChild(ball);
         }
     }
 
     animationStep (delta) {
-        // Moves each ball, also drawing the trails
-        this.trailContext.globalAlpha = 1;
+        // Moves each ball
 
         this.balls.forEach((ball) => {
-            this.trailContext.beginPath();
-            this.trailContext.strokeStyle = ball.color;
-            this.trailContext.lineWidth = 2 * ball.radius;
-            this.trailContext.lineCap = 'round';
-            this.trailContext.moveTo(ball.x, ball.y);
-
             ball.move(delta, this.gravityX, this.gravityY);
             if (ball.x - ball.radius < 0) {
                 ball.x = ball.radius + (ball.radius - ball.x);
@@ -60,14 +69,7 @@ class BallBox extends Sprite {
                 ball.x = (this.width - ball.radius) - (ball.x - (this.width - ball.radius));
                 ball.speedX = -ball.speedX;
             }
-
-            this.trailContext.lineTo(ball.x, ball.y);
-            this.trailContext.stroke();
         });
-
-        // Applies a fade effect
-        this.trailContext.globalAlpha = 0.1;
-        this.trailContext.fillRect(0, 0, this.width, this.height);
 
         // Removes the balls that fell off screen
         const offBalls = this.balls.filter(ball => (ball.y - ball.radius) >= this.height);
