@@ -11,18 +11,6 @@ class BallBox extends Container {
         this.gravityX = gravityX;
         this.gravityY = gravityY;
         this.balls = [];
-
-        // const backgroundTexture = document.createElement('canvas');
-        // backgroundTexture.width = width;
-        // backgroundTexture.height = height;
-// 
-        // const backgroundContext = backgroundTexture.getContext('2d');
-        // backgroundContext.fillStyle = BLACK;
-        // backgroundContext.fillRect(0, 0, width, height);
-// 
-        // this.background = new Sprite(backgroundTexture);
-        // this.background.anchorX = this.background.anchorY = 0;
-        // this.addChild(this.background);
     }
 
     drawOn(context) {
@@ -32,8 +20,7 @@ class BallBox extends Container {
     }
 
     propagateEvent(eventType, position, matrix = null) {
-        matrix = this.stackTransform(matrix);
-        this.emit(eventType, eventType, matrix.transform(position));
+        this.emit(eventType, eventType, position);
 
         return true;
     }
@@ -60,7 +47,7 @@ class BallBox extends Container {
         // Moves each ball
 
         this.balls.forEach((ball) => {
-            ball.move(delta, this.gravityX, this.gravityY);
+            ball.applyGravity(delta, this.gravityX, this.gravityY);
             if (ball.x - ball.radius < 0) {
                 ball.x = ball.radius + (ball.radius - ball.x);
                 ball.speedX = -ball.speedX;

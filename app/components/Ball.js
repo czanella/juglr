@@ -32,7 +32,7 @@ class Ball extends Sprite {
         this.textureContext.fill();
     }
 
-    move (delta, gravityX, gravityY) {
+    applyGravity (delta, gravityX, gravityY) {
         if (!this.fixed) {
             this.speedX += gravityX * delta;
             this.speedY += gravityY * delta;
