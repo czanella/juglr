@@ -89,9 +89,7 @@ class Game {
 
     addBalls (eventType, position) {
         for (let i=0; i < 5; i++) {
-            const newBall = new Ball();
-            newBall.x = position[0];
-            newBall.y = position[1];
+            const newBall = new Ball(position[0], position[1]);
 
             const angle = Math.PI * Math.random();
             newBall.speedX =  400 * Math.cos(angle);

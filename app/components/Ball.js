@@ -1,17 +1,19 @@
-import { Sprite } from '../lightpixel';
-import { randomPick } from '../utils';
+import { Drawable } from '../lightpixel';
+import { randomPick, CircularQueue } from '../utils';
 
 const COLOR_LIST = [
-    '#ff0000',
-    '#00ff00',
-    '#0000ff',
-    '#ffff00',
-    '#ff00ff',
-    '#00ffff',
+    ['rgb(255, 0, 0)', 'rgba(255, 0, 0, 0.5)'],
+    ['rgb(0, 255, 0)', 'rgba(0, 255, 0, 0.5)'],
+    ['rgb(0, 0, 255)', 'rgba(0, 0, 255, 0.5)'],
+    ['rgb(255, 255, 0)', 'rgba(255, 255, 0, 0.5)'],
+    ['rgb(255, 0, 255)', 'rgba(255, 0, 255, 0.5)'],
+    ['rgb(0, 255, 255)', 'rgba(0, 255, 255, 0.5)'],
 ];
 
-class Ball extends Sprite {
-    constructor (radius = 10, color = null) {
+const TRAIL_LENGTH = 20;
+
+class Ball extends Drawable {
+    constructor (initialX = 0, initialY = 0, radius = 10, color = null) {
         super();
 
         this.radius = radius;
@@ -21,15 +23,34 @@ class Ball extends Sprite {
         this.speedY = 0;
         this.fixed = false;
 
-        this.texture = document.createElement('canvas');
-        this.texture.width = 2 * radius;
-        this.texture.height = 2 * radius;
+        this.x = initialX;
+        this.y = initialY;
+        this.trail = new CircularQueue(TRAIL_LENGTH, { x: initialX, y: initialY });
+    }
 
-        this.textureContext = this.texture.getContext('2d');
-        this.textureContext.fillStyle = this.color;
-        this.textureContext.beginPath();
-        this.textureContext.arc(this.radius, this.radius, this.radius, 0, 2*Math.PI);
-        this.textureContext.fill();
+    drawOn(context) {
+        context.fillStyle = this.color[0];
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
+        context.fill();
+
+        context.strokeStyle = this.color[1];
+        context.lineWidth = this.radius / 2;
+        context.beginPath();
+        this.trail.iterate((pos, i) => {
+            if (i == 0) {
+                context.moveTo(pos.x, pos.y);
+            } else {
+                context.lineTo(pos.x, pos.y);
+            }
+        });
+        context.stroke();
+    }
+
+    setPosition(x, y) {
+        this.x = x;
+        this.y = y;
+        this.trail.add({ x, y });
     }
 
     applyGravity (delta, gravityX, gravityY) {
@@ -37,8 +58,10 @@ class Ball extends Sprite {
             this.speedX += gravityX * delta;
             this.speedY += gravityY * delta;
 
-            this.x += this.speedX * delta;
-            this.y += this.speedY * delta;
+            this.setPosition(
+                this.x + this.speedX * delta,
+                this.y + this.speedY * delta,
+            );
         }
     }
 }
