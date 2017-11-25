@@ -1,17 +1,20 @@
-import { Sprite } from '../lightpixel';
-import { randomPick } from '../utils';
+import { Drawable } from '../lightpixel';
+import { randomPick, CircularQueue, TrailPoint } from '../utils';
 
 const COLOR_LIST = [
-    '#ff0000',
-    '#00ff00',
-    '#0000ff',
-    '#ffff00',
-    '#ff00ff',
-    '#00ffff',
+    ['rgb(255, 0, 0)', 'rgba(255, 0, 0, 0.5)'],
+    ['rgb(0, 255, 0)', 'rgba(0, 255, 0, 0.5)'],
+    ['rgb(0, 0, 255)', 'rgba(0, 0, 255, 0.5)'],
+    ['rgb(255, 255, 0)', 'rgba(255, 255, 0, 0.5)'],
+    ['rgb(255, 0, 255)', 'rgba(255, 0, 255, 0.5)'],
+    ['rgb(0, 255, 255)', 'rgba(0, 255, 255, 0.5)'],
 ];
 
-class Ball extends Sprite {
-    constructor (radius = 10, color = null) {
+const TRAIL_LENGTH = 20;
+const TWO_PI = 2 * Math.PI;
+
+class Ball extends Drawable {
+    constructor (x = 0, y = 0, radius = 10, color = null) {
         super();
 
         this.radius = radius;
@@ -21,24 +24,47 @@ class Ball extends Sprite {
         this.speedY = 0;
         this.fixed = false;
 
-        this.texture = document.createElement('canvas');
-        this.texture.width = 2 * radius;
-        this.texture.height = 2 * radius;
-
-        this.textureContext = this.texture.getContext('2d');
-        this.textureContext.fillStyle = this.color;
-        this.textureContext.beginPath();
-        this.textureContext.arc(this.radius, this.radius, this.radius, 0, 2*Math.PI);
-        this.textureContext.fill();
+        this.x = x;
+        this.y = y;
+        this.trail = new CircularQueue(TRAIL_LENGTH, new TrailPoint({ x, y }));
     }
 
-    move (delta, gravityX, gravityY) {
+    drawOn(context) {
+        context.fillStyle = this.color[1];
+        const trailPoints = this.trail.map((p, i) => {
+            return p.sidePoints(this.radius * i / (TRAIL_LENGTH - 1));
+        });
+        context.beginPath();
+        context.moveTo(trailPoints[0].left.x, trailPoints[0].left.y);
+        for (let i = 1; i < trailPoints.length; i++) {
+            context.lineTo(trailPoints[i].left.x, trailPoints[i].left.y)
+        }
+        for (let i = trailPoints.length - 1; i >= 0; i--) {
+            context.lineTo(trailPoints[i].right.x, trailPoints[i].right.y)
+        }
+        context.fill();
+
+        context.fillStyle = this.color[0];
+        context.beginPath();
+        context.arc(this.x, this.y, this.radius, 0, TWO_PI);
+        context.fill();
+    }
+
+    setPosition(x, y) {
+        this.x = x;
+        this.y = y;
+        this.trail.add(new TrailPoint({ x, y }, this.trail.head()));
+    }
+
+    applyGravity (delta, gravityX, gravityY) {
         if (!this.fixed) {
             this.speedX += gravityX * delta;
             this.speedY += gravityY * delta;
 
-            this.x += this.speedX * delta;
-            this.y += this.speedY * delta;
+            this.setPosition(
+                this.x + this.speedX * delta,
+                this.y + this.speedY * delta,
+            );
         }
     }
 }

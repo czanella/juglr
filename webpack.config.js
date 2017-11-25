@@ -10,7 +10,8 @@ module.exports = {
         historyApiFallback: true,
         inline: true,
         host: '0.0.0.0',
-        port: 8000
+        port: 8000,
+        disableHostCheck: true
     },
 
     module: {
@@ -28,7 +29,7 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: 'babel',
                 query: {
-                    presets: ['react', 'es2015', 'stage-0'],
+                    presets: ['react', 'env', 'stage-0'],
                 }
             },
             {
