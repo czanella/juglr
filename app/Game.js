@@ -1,15 +1,8 @@
 import createjs from 'preload-js'
 
-import {
-    Sprite,
-    Container,
-    Mask,
-} from './lightpixel';
+import { Sprite, Container, Mask, TextNode } from './lightpixel';
 
-import {
-    Ball,
-    BallBox,
-} from './components';
+import { Ball, BallBox } from './components';
 
 class Game {
     constructor(width = 300, height = 480, view = null) {
@@ -50,6 +43,16 @@ class Game {
         this.ballBox = new BallBox(this.view.width, this.view.height, 0, 800);
         this.ballBox.on('mousedown', this.addBalls);
 
+        // Builds the scoreboard
+        this.score = new TextNode('Eita', 80, '#ffffff', 'LCD Solid', 'center', 'top');
+        this.score.x = this.view.width / 2;
+        this.score.y = 10;
+
+        // Builds the stage
+        this.stage = new Container();
+        this.stage.addChild(this.ballBox);
+        this.stage.addChild(this.score);
+
         this.startAnimation();
     }
 
@@ -67,7 +70,7 @@ class Game {
         this.ballBox.animationStep(delta);
 
         // Draw!
-        this.ballBox.drawOn(this.viewContext);
+        this.stage.drawOn(this.viewContext);
 
         // Request the next animation frame
         this.animationId = window.requestAnimationFrame(this.animationStep);
