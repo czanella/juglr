@@ -12,10 +12,26 @@ class CircularQueue {
         this.n = (this.n + 1) % this.buffer.length;
     }
 
-    iterate(callback) {
+    head() {
+        return this.buffer[(this.n - 1 + this.buffer.length) % this.buffer.length];
+    }
+
+    forEach(callback) {
         for (let i = 0; i < this.buffer.length; i++) {
             callback(this.buffer[(this.n + i) % this.buffer.length], i);
         }
+    }
+
+    map(callback) {
+        const result = [];
+
+        for (let i = 0; i < this.buffer.length; i++) {
+            result.push(
+                callback(this.buffer[(this.n + i) % this.buffer.length], i)
+            );
+        }
+
+        return result;
     }
 }
 

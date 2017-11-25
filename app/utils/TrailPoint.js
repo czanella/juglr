@@ -1,7 +1,7 @@
 class TrailPoint {
-  constructor(point, pivot) {
+  constructor(point, pivot = null) {
     const { x, y } = point;
-    const { px, py } = pivot;
+    const { x: px, y: py } = (pivot || point);
 
     this.x = x;
     this.y = y;
