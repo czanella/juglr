@@ -45,7 +45,6 @@ class BallBox extends Container {
 
     animationStep (delta) {
         // Moves each ball
-
         this.balls.forEach((ball) => {
             ball.applyGravity(delta, this.gravityX, this.gravityY);
             if (ball.x - ball.radius < 0) {
@@ -59,7 +58,7 @@ class BallBox extends Container {
         });
 
         // Removes the balls that fell off screen
-        const offBalls = this.balls.filter(ball => (ball.y - ball.radius) >= this.height);
+        const offBalls = this.balls.filter(ball => ball.minY() >= this.height);
         offBalls.forEach(ball => this.removeBall(ball));
     }
 }

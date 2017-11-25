@@ -16,6 +16,10 @@ class CircularQueue {
         return this.buffer[(this.n - 1 + this.buffer.length) % this.buffer.length];
     }
 
+    tail() {
+        return this.buffer[this.n];
+    }
+
     forEach(callback) {
         for (let i = 0; i < this.buffer.length; i++) {
             callback(this.buffer[(this.n + i) % this.buffer.length], i);

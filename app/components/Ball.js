@@ -50,6 +50,10 @@ class Ball extends Drawable {
         context.fill();
     }
 
+    minY() {
+        return this.trail.tail().y;
+    }
+
     setPosition(x, y) {
         this.x = x;
         this.y = y;
