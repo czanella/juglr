@@ -44,7 +44,14 @@ class Game {
         this.ballBox.on('mousedown', this.addBalls);
 
         // Builds the scoreboard
-        this.score = new TextNode('Eita', 80, '#ffffff', 'LCD Solid', 'center', 'top');
+        this.score = new TextNode(
+            'Eita',
+            80,
+            '#ffffff',
+            'LCD Solid',
+            'center',
+            'top'
+        );
         this.score.x = this.view.width / 2;
         this.score.y = 10;
 

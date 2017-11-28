@@ -7,7 +7,8 @@ class TextNode extends Drawable {
         color = '#ffffff',
         fontFamily = 'serif',
         textAlign = 'start',
-        textBaseline = 'alphabetic'
+        textBaseline = 'alphabetic',
+        strokeWidth = undefined
     ) {
         super();
 
@@ -17,6 +18,7 @@ class TextNode extends Drawable {
         this._fontFamily = fontFamily;
         this.textAlign = textAlign;
         this.textBaseline = textBaseline;
+        this.strokeWidth = strokeWidth;
 
         this.updateFontString();
     }
@@ -48,10 +50,16 @@ class TextNode extends Drawable {
             this.stackContext(context);
 
             context.font = this.fontString;
-            context.fillStyle = this.color;
             context.textAlign = this.textAlign;
             context.textBaseline = this.textBaseline;
-            context.fillText(this.text, 0, 0);
+            if (this.strokeWidth) {
+                context.strokeStyle = this.color;
+                context.lineWidth = this.strokeWidth;
+                context.strokeText(this.text, 0, 0);
+            } else {
+                context.fillStyle = this.color;
+                context.fillText(this.text, 0, 0);
+            }
 
             context.restore();
         }
