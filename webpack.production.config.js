@@ -53,6 +53,10 @@ module.exports = {
             from: __dirname + '/app/static',
             to: __dirname + '/build/static'
         }]),
+        new CopyWebpackPlugin([{
+            from: __dirname + '/app/fonts',
+            to: __dirname + '/build/fonts'
+        }]),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin(),
         new ExtractTextPlugin('/[name]-[hash].css')
