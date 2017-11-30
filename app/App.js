@@ -9,13 +9,10 @@ class App {
         this.view.width = width;
         this.view.height = height;
         this.viewContext = this.view.getContext('2d');
-        this.viewContext.fillStyle = '#4286f4';
 
         // Method bindings
         this.animationStep = this.animationStep.bind(this);
-        this.onLoadingComplete = this.onLoadingComplete.bind(this);
         this.onInteraction = this.onInteraction.bind(this);
-        this.addBalls = this.addBalls.bind(this);
 
         // Initial parameters
         this.animationId = null;
@@ -37,7 +34,6 @@ class App {
 
         // Builds the ballBox
         this.ballBox = new BallBox(this.view.width, this.view.height, 0, 800);
-        this.ballBox.on('mousedown', this.addBalls);
 
         // Builds the scoreboard
         this.score = new OutlineText('Eita', 80);
@@ -58,13 +54,6 @@ class App {
     }
 
     animationStep(timestamp) {
-        // Computes the delta
-        const delta = (timestamp - (this.previousTimestamp || timestamp)) / 1000;
-        this.previousTimestamp = timestamp;
-
-        // Moves the balls in the ball box
-        this.ballBox.animationStep(delta);
-
         // Draw!
         this.stage.drawOn(this.viewContext);
 
@@ -83,19 +72,7 @@ class App {
 
         const positionSource = e.touches ? e.touches[0] : e;
 
-        this.ballBox.propagateEvent('mousedown', [positionSource.pageX, positionSource.pageY]);
-    }
-
-    addBalls (eventType, position) {
-        for (let i=0; i < 5; i++) {
-            const newBall = new Ball(position[0], position[1]);
-
-            const angle = Math.PI * Math.random();
-            newBall.speedX =  400 * Math.cos(angle);
-            newBall.speedY = -400 * Math.sin(angle);
-
-            this.ballBox.addBall(newBall);
-        }
+        this.stage.propagateEvent('mousedown', [positionSource.pageX, positionSource.pageY]);
     }
 }
 
