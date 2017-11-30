@@ -1,14 +1,8 @@
-import createjs from 'preload-js'
-
-import {
-    Sprite,
-    Container,
-    Mask,
-} from './lightpixel';
+import { Sprite, Container, Mask } from './lightpixel';
 
 import { Ball, BallBox, OutlineText } from './components';
 
-class Game {
+class App {
     constructor(width = 300, height = 480, view = null) {
         // Initializes the game view (canvas)
         this.view = view || document.createElement('canvas');
@@ -27,18 +21,16 @@ class Game {
         this.animationId = null;
         this.previousTimestamp = null;
 
-        // Loads the assets
-        this.preloader = new createjs.LoadQueue();
-        this.preloader.on('complete', this.onLoadingComplete);
-        this.preloader.loadManifest([
-            {
-                id: 'logo',
-                src:'static/logo.png'
-            },
-        ]);
-    }
+        // // Loads the assets
+        // this.preloader = new createjs.LoadQueue();
+        // this.preloader.on('complete', this.onLoadingComplete);
+        // this.preloader.loadManifest([
+        //     {
+        //         id: 'logo',
+        //         src:'static/logo.png'
+        //     },
+        // ]);
 
-    onLoadingComplete() {
         // Set up listeners in the canvas
         this.view.addEventListener('mousedown', this.onInteraction);
         this.view.addEventListener('touchstart', this.onInteraction);
@@ -107,4 +99,4 @@ class Game {
     }
 }
 
-export default Game;
+export default App;

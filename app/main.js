@@ -1,18 +1,18 @@
-import Game from './Game.js';
+import App from './App.js';
 
-function initGameDesktop() {
-    const game = new Game(600, 960);
-    document.body.appendChild(game.view);
+function initAppDesktop() {
+    const app = new App(600, 960);
+    document.body.appendChild(app.view);
 }
 
-function initGameCordova() {
-    const game = new Game(window.innerWidth, window.innerHeight);
-    document.body.appendChild(game.view);
+function initAppCordova() {
+    const app = new App(window.innerWidth, window.innerHeight);
+    document.body.appendChild(app.view);
 }
 
 if (navigator.appName.indexOf('CocoonJS') >= 0) {
-    document.addEventListener('deviceready', initGameCordova);
+    document.addEventListener('deviceready', initAppCordova);
 }
 else {
-    initGameDesktop();
+    initAppDesktop();
 }

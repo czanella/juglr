@@ -1,9 +1,8 @@
-export {
-    INCREASE_SCORE,
-    increaseScore,
-} from './increaseScore';
+// SIMPLE ACTIONS - sync actions with no parameters
+export * from './simpleActions';
 
-export {
-    RESET_SCORE,
-    resetScore,
-} from './resetScore';
+// REGULAR ACTIONS - normal Redux actions
+// export {
+//     INCREASE_SCORE,
+//     increaseScore,
+// } from './increaseScore';
