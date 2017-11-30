@@ -1,4 +1,5 @@
 import { Container, TextNode } from '../lightpixel';
+import { FONT } from '../config.json';
 
 class OutlineText extends Container {
     constructor(text = '', size = 20) {
@@ -8,7 +9,7 @@ class OutlineText extends Container {
             text,
             size,
             '#ff0000',
-            'LCD Solid',
+            FONT,
             'center',
             'middle',
             10
@@ -18,7 +19,7 @@ class OutlineText extends Container {
             text,
             size,
             '#000000',
-            'LCD Solid',
+            FONT,
             'center',
             'middle',
             4
@@ -28,7 +29,7 @@ class OutlineText extends Container {
             text,
             size,
             '#ffffff',
-            'LCD Solid',
+            FONT,
             'center',
             'middle'
         );
