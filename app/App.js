@@ -1,9 +1,8 @@
+import store from './redux/store';
+import { START_GAME } from './redux/actions';
 import { Sprite, Container, Mask } from './lightpixel';
-
 import { Ball, BallBox, OutlineText } from './components';
-
 import { Game } from './controllers';
-
 import { GRAVITY } from './config.json';
 
 class App {
@@ -51,7 +50,7 @@ class App {
 
         // Starts the game
         this.gameController = new Game(this.ballBox, this.scoreView);
-        this.gameController.startGame();
+        store.dispatch(START_GAME);
 
         this.startAnimation();
     }
