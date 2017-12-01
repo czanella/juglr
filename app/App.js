@@ -2,6 +2,8 @@ import { Sprite, Container, Mask } from './lightpixel';
 
 import { Ball, BallBox, OutlineText } from './components';
 
+import { GRAVITY } from './config.json';
+
 class App {
     constructor(width = 300, height = 480, view = null) {
         // Initializes the game view (canvas)
@@ -33,7 +35,7 @@ class App {
         this.view.addEventListener('touchstart', this.onInteraction);
 
         // Builds the ballBox
-        this.ballBox = new BallBox(this.view.width, this.view.height, 0, 800);
+        this.ballBox = new BallBox(this.view.width, this.view.height, 0, GRAVITY);
 
         // Builds the scoreboard
         this.score = new OutlineText('Eita', 80);

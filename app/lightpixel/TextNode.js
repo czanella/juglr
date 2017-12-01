@@ -19,6 +19,7 @@ class TextNode extends Drawable {
         this.textAlign = textAlign;
         this.textBaseline = textBaseline;
         this.strokeWidth = strokeWidth;
+        this.metrics = null;
 
         this.updateFontString();
     }
@@ -60,6 +61,8 @@ class TextNode extends Drawable {
                 context.fillStyle = this.color;
                 context.fillText(this.text, 0, 0);
             }
+
+            
 
             context.restore();
         }
