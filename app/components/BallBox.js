@@ -1,4 +1,5 @@
 import { Sprite, Container } from '../lightpixel';
+import { BALL_REMOVED } from '../events';
 
 const BLACK = '#000000';
 
@@ -11,6 +12,8 @@ class BallBox extends Container {
         this.gravityX = gravityX;
         this.gravityY = gravityY;
         this.balls = [];
+
+        this.removeBall = this.removeBall.bind(this);
     }
 
     drawOn(context) {
@@ -25,7 +28,7 @@ class BallBox extends Container {
         return true;
     }
 
-    addBall (ball) {
+    addBall(ball) {
         const ballIndex = this.balls.indexOf(ball);
 
         if (ballIndex < 0) {
@@ -34,7 +37,7 @@ class BallBox extends Container {
         }
     }
 
-    removeBall (ball) {
+    removeBall(ball) {
         const ballIndex = this.balls.indexOf(ball);
 
         if (ballIndex >= 0) {
@@ -43,9 +46,16 @@ class BallBox extends Container {
         }
     }
 
-    animationStep (delta) {
+    removeAllBalls() {
+        this.balls.forEach(this.removeChild);
+        this.balls = [];
+    }
+
+    animationStep(delta) {
         // Moves each ball
         this.balls.forEach((ball) => {
+            const originalY = ball.y;
+
             ball.applyGravity(delta, this.gravityX, this.gravityY);
             if (ball.x - ball.radius < 0) {
                 ball.x = ball.radius + (ball.radius - ball.x);
@@ -56,10 +66,14 @@ class BallBox extends Container {
                 ball.speedX = -ball.speedX;
             }
         });
+    }
 
-        // Removes the balls that fell off screen
-        const offBalls = this.balls.filter(ball => ball.minY() >= this.height);
-        offBalls.forEach(ball => this.removeBall(ball));
+    ballsOffScreen() {
+        return this.balls.filter(b => b.y - b.radius >= this.height);
+    }
+
+    ballsTotallyOffScreen() {
+        return this.balls.filter(b => b.minY() >= this.height);
     }
 }
 

@@ -1,4 +1,6 @@
 {
   "FONT": "LCD Solid",
-  "GRAVITY": 80
+  "GRAVITY": 80,
+  "BALL_RADIUS": 10,
+  "MAX_INITIAL_SPEED_X": 30
 }

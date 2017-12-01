@@ -14,7 +14,7 @@ const TRAIL_LENGTH = 20;
 const TWO_PI = 2 * Math.PI;
 
 class Ball extends Drawable {
-    constructor (x = 0, y = 0, radius = 10, color = null) {
+    constructor (x = 0, y = 0, radius = 10, speedX = 0, speedY = 0, color = null) {
         super();
 
         this.radius = radius;

@@ -1,21 +1,30 @@
 import store from '../redux/store';
-import { increaseScore, resetScore } from '../redux/actions';
+import { INCREASE_SCORE, RESET_SCORE } from '../redux/actions';
+import { Ball } from '../components';
+import { BALL_RADIUS, MAX_INITIAL_SPEED_X } from '../config.json';
 
 class Game {
     constructor(ballBox, scoreView) {
         this.ballBox = ballBox;
         this.scoreView = scoreView;
+        this.scoreView.interactive = false;
 
-        this.score = 0;
         this.gameOn = false;
         this.unsubscribeStore = store.subscribe(this.onStateChange.bind(this));
+
+        this.onBallBoxClick = this.onBallBoxClick.bind(this);
+    }
+
+    set score(value) {
+        this._score = value;
+        this.scoreView.text = value;
     }
 
     onStateChange() {
         const { score, gameOn } = store.getState();
+
         if (score !== this.score) {
             this.score = score;
-            this.scoreView.text = score;
         }
 
         if (gameOn && !this.gameOn) {
@@ -27,12 +36,30 @@ class Game {
         }
     }
 
-    startGame() {
+    addNewBall() {
+        this.ballBox.addBall(
+            new Ball(
+                Math.random() * (this.width - 2 * BALL_RADIUS) + BALL_RADIUS,
+                -BALL_RADIUS,
+                BALL_RADIUS,
+                Math.random() * 2 * MAX_INITIAL_SPEED_X - MAX_INITIAL_SPEED_X,
+                0
+            )
+        );
+    }
 
+    startGame() {
+        this.ballBox.removeAllBalls();
+        store.dispatch(RESET_SCORE);
     }
 
     stopGame() {
         
+    }
+
+    onBallBoxClick(e) {
+        console.log('onBallBoxClick', e);
+        store.dispatch(INCREASE_SCORE);
     }
 
     dispose() {
