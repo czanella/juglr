@@ -14,6 +14,7 @@ class OutlineText extends Container {
             'middle',
             10
         );
+        this.red.interactive = true;
 
         this.black = new TextNode(
             text,
@@ -49,14 +50,6 @@ class OutlineText extends Container {
 
     get text() {
         return this.white.text;
-    }
-
-    set interactive(value) {
-        this.red.interactive = value;
-    }
-
-    get interactive() {
-        return this.red.interactive;
     }
 }
 

@@ -2,6 +2,8 @@ import { Sprite, Container, Mask } from './lightpixel';
 
 import { Ball, BallBox, OutlineText } from './components';
 
+import { Game } from './controllers';
+
 import { GRAVITY } from './config.json';
 
 class App {
@@ -38,14 +40,18 @@ class App {
         this.ballBox = new BallBox(this.view.width, this.view.height, 0, GRAVITY);
 
         // Builds the scoreboard
-        this.score = new OutlineText('Eita', 80);
-        this.score.x = this.view.width / 2;
-        this.score.y = 40;
+        this.scoreView = new OutlineText('Eita', 80);
+        this.scoreView.x = this.view.width / 2;
+        this.scoreView.y = this.view.height / 2;
 
         // Builds the stage
         this.stage = new Container();
         this.stage.addChild(this.ballBox);
-        this.stage.addChild(this.score);
+        this.stage.addChild(this.scoreView);
+
+        // Starts the game
+        this.gameController = new Game(this.ballBox, this.scoreView);
+        this.gameController.startGame();
 
         this.startAnimation();
     }

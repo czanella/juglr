@@ -7,12 +7,13 @@ class Game {
     constructor(ballBox, scoreView) {
         this.ballBox = ballBox;
         this.scoreView = scoreView;
-        this.scoreView.interactive = false;
-
+        
+        this.onStateChange = this.onStateChange.bind(this);
+        this.onInteraction = this.onInteraction.bind(this);
+        
         this.gameOn = false;
-        this.unsubscribeStore = store.subscribe(this.onStateChange.bind(this));
-
-        this.onBallBoxClick = this.onBallBoxClick.bind(this);
+        this.unsubscribeStore = store.subscribe(this.onStateChange);
+        this.scoreView.on('mousedown', this.onInteraction);
     }
 
     set score(value) {
@@ -57,8 +58,8 @@ class Game {
         
     }
 
-    onBallBoxClick(e) {
-        console.log('onBallBoxClick', e);
+    onInteraction(e) {
+        console.log('onInteraction', e);
         store.dispatch(INCREASE_SCORE);
     }
 
