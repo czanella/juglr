@@ -1,4 +1,4 @@
-import App from './App.js';
+import App from './App';
 
 function initAppDesktop() {
     const app = new App(600, 960);

@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 
-import { RAD_TO_DEG, DEG_TO_RAD } from './Constants.js';
-import MatrixTransform from './MatrixTransform.js';
+import { RAD_TO_DEG, DEG_TO_RAD } from './Constants';
+import MatrixTransform from './MatrixTransform';
 
 
 class Drawable extends EventEmitter {

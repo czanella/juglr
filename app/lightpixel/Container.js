@@ -1,4 +1,4 @@
-import Drawable from './Drawable.js';
+import Drawable from './Drawable';
 
 class Container extends Drawable {
     constructor() {

@@ -1,4 +1,4 @@
-import Drawable from './Drawable.js';
+import Drawable from './Drawable';
 
 class TextNode extends Drawable {
     constructor(

@@ -1,8 +1,8 @@
-import Drawable from './Drawable.js';
-import Sprite from './Sprite.js';
-import Container from './Container.js';
-import Mask from './Mask.js';
-import TextNode from './TextNode.js';
+import Drawable from './Drawable';
+import Sprite from './Sprite';
+import Container from './Container';
+import Mask from './Mask';
+import TextNode from './TextNode';
 
 export {
     Drawable,
