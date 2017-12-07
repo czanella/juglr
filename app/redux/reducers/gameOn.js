@@ -23,4 +23,4 @@ function gameOn(state = false, action) {
     return newState;
 }
 
-export default score;
+export default gameOn;

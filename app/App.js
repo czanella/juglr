@@ -3,7 +3,7 @@ import { START_GAME } from './redux/actions';
 import { Sprite, Container, Mask } from './lightpixel';
 import { Ball, BallBox, OutlineText } from './components';
 import { Game } from './controllers';
-import { GRAVITY } from './config.json';
+import { GRAVITY, SCORE_FONT_SIZE } from './config.json';
 
 class App {
     constructor(width = 300, height = 480, view = null) {
@@ -39,9 +39,10 @@ class App {
         this.ballBox = new BallBox(this.view.width, this.view.height, 0, GRAVITY);
 
         // Builds the scoreboard
-        this.scoreView = new OutlineText('Eita', 80);
+        this.scoreView = new OutlineText('Eita', SCORE_FONT_SIZE);
         this.scoreView.x = this.view.width / 2;
-        this.scoreView.y = this.view.height / 2;
+        this.scoreView.y = SCORE_FONT_SIZE / 2 + 30;
+        this.scoreView.interactive = false;
 
         // Builds the stage
         this.stage = new Container();
