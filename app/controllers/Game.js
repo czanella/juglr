@@ -14,6 +14,7 @@ class Game {
 
         this.onStateChange = this.onStateChange.bind(this);
         this.onInteraction = this.onInteraction.bind(this);
+        this.gameLoop = this.gameLoop.bind(this);
 
         this.unsubscribeStore = store.subscribe(this.onStateChange);
     }
@@ -43,7 +44,7 @@ class Game {
     addNewBall() {
         this.ballBox.addBall(
             new Ball(
-                Math.random() * (this.width - 2 * BALL_RADIUS) + BALL_RADIUS,
+                Math.random() * (this.ballBox.width - 2 * BALL_RADIUS) + BALL_RADIUS,
                 -BALL_RADIUS,
                 BALL_RADIUS,
                 Math.random() * 2 * MAX_INITIAL_SPEED_X - MAX_INITIAL_SPEED_X,
@@ -64,10 +65,9 @@ class Game {
     }
 
     gameLoop(timestamp) {
-        console.log('gameLoop', timestamp);
         const delta = this.lastTimestamp ? timestamp - this.lastTimestamp : 0;
         this.lastTimestamp = timestamp;
-        this.ballBox.animationStep(delta);
+        this.ballBox.animationStep(delta / 1000);
 
         this.gameLoopId = window.requestAnimationFrame(this.gameLoop);
     }

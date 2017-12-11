@@ -51,7 +51,6 @@ class BallBox extends Container {
     }
 
     animationStep(delta) {
-        console.log('animationStep', delta);
         // Moves each ball
         this.balls.forEach((ball) => {
             const originalY = ball.y;
@@ -65,9 +64,9 @@ class BallBox extends Container {
                 ball.x = (this.width - ball.radius) - (ball.x - (this.width - ball.radius));
                 ball.speedX = -ball.speedX;
             }
+
             console.log('Ball!', ball.x, ball.y);
         });
-        console.log('------------------');
     }
 
     ballsOffScreen() {
