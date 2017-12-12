@@ -49,9 +49,11 @@ class App {
 
         // Starts the game
         this.gameController = new Game(this.ballBox);
-        store.dispatch(START_GAME);
-
         this.startAnimation();
+
+        window.setTimeout(() => {
+            store.dispatch(START_GAME);
+        }, 3000);
     }
 
     startAnimation() {

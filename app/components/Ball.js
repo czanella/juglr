@@ -60,7 +60,7 @@ class Ball extends Drawable {
         this.trail.add(new TrailPoint({ x, y }, this.trail.head()));
     }
 
-    applyGravity (delta, gravityX, gravityY) {
+    applyGravity(delta, gravityX, gravityY) {
         if (!this.fixed) {
             this.speedX += gravityX * delta;
             this.speedY += gravityY * delta;
@@ -70,6 +70,17 @@ class Ball extends Drawable {
                 this.y + this.speedY * delta,
             );
         }
+    }
+
+    distance2(x, y) {
+        const dx = this.x - x;
+        const dy = this.y - y;
+
+        return dx * dx + dy * dy;
+    }
+
+    distance(x, y) {
+        return Math.sqrt(this.distance2(x, y));
     }
 }
 

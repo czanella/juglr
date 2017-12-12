@@ -64,8 +64,6 @@ class BallBox extends Container {
                 ball.x = (this.width - ball.radius) - (ball.x - (this.width - ball.radius));
                 ball.speedX = -ball.speedX;
             }
-
-            console.log('Ball!', ball.x, ball.y);
         });
     }
 

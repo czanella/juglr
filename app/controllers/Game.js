@@ -1,7 +1,17 @@
 import store from '../redux/store';
 import { INCREASE_SCORE, RESET_SCORE } from '../redux/actions';
 import { Ball } from '../components';
-import { BALL_RADIUS, MAX_INITIAL_SPEED_X } from '../config.json';
+import { randomRange } from '../utils';
+import {
+    BALL_RADIUS,
+    MAX_INITIAL_SPEED_X,
+    TAP_IMPULSE,
+    TAP_ANGLE,
+    HIT_AREA_SCALE,
+ } from '../config.json';
+
+const HIT_DISTANCE2 = Math.pow(HIT_AREA_SCALE * BALL_RADIUS, 2);
+const DEG_TO_RAD = Math.PI / 180;
 
 class Game {
     constructor(ballBox) {
@@ -66,9 +76,23 @@ class Game {
         this.gameLoopId = null;
     }
 
-    onInteraction(e) {
-        console.log('onInteraction', e);
-        store.dispatch(INCREASE_SCORE);
+    onInteraction(event, data) {
+        const [ x, y ] = data;
+        for (let i = 0; i < this.ballBox.balls.length; i += 1) {
+            const ball = this.ballBox.balls[i];
+            const d2 = ball.distance2(x, y);
+
+            if (ball.distance2(x, y) <= HIT_DISTANCE2) {
+                const angle = randomRange(TAP_ANGLE[0], TAP_ANGLE[1]) * DEG_TO_RAD;
+                const speed = randomRange(TAP_IMPULSE[0], TAP_IMPULSE[1]);
+                ball.speedX = speed * Math.cos(angle);
+                ball.speedY = -speed * Math.sin(angle);
+
+                store.dispatch(INCREASE_SCORE);
+
+                break;
+            }
+        }
     }
 
     dispose() {
