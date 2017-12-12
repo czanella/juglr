@@ -4,9 +4,8 @@ import { Ball } from '../components';
 import { BALL_RADIUS, MAX_INITIAL_SPEED_X } from '../config.json';
 
 class Game {
-    constructor(ballBox, scoreView) {
+    constructor(ballBox) {
         this.ballBox = ballBox;
-        this.scoreView = scoreView;
 
         this.gameOn = false;
         this.gameLoopId = null;
@@ -19,18 +18,8 @@ class Game {
         this.unsubscribeStore = store.subscribe(this.onStateChange);
     }
 
-    set score(value) {
-        this._score = value;
-        this.scoreView.text = value;
-    }
-
     onStateChange() {
-        const { score, gameOn } = store.getState();
-        console.log('onStateChange', score, gameOn);
-
-        if (score !== this.score) {
-            this.score = score;
-        }
+        const { gameOn } = store.getState();
 
         if (gameOn && !this.gameOn) {
             this.gameOn = true;

@@ -1,7 +1,7 @@
 import store from './redux/store';
 import { START_GAME } from './redux/actions';
-import { Sprite, Container, Mask } from './lightpixel';
-import { Ball, BallBox, OutlineText } from './components';
+import { Container } from './lightpixel';
+import { BallBox, GameScore } from './components';
 import { Game } from './controllers';
 import { GRAVITY, SCORE_FONT_SIZE } from './config.json';
 
@@ -39,10 +39,8 @@ class App {
         this.ballBox = new BallBox(this.view.width, this.view.height, 0, GRAVITY);
 
         // Builds the scoreboard
-        this.scoreView = new OutlineText('Eita', SCORE_FONT_SIZE);
+        this.scoreView = new GameScore();
         this.scoreView.x = this.view.width / 2;
-        this.scoreView.y = SCORE_FONT_SIZE / 2 + 30;
-        this.scoreView.interactive = false;
 
         // Builds the stage
         this.stage = new Container();
@@ -50,7 +48,7 @@ class App {
         this.stage.addChild(this.scoreView);
 
         // Starts the game
-        this.gameController = new Game(this.ballBox, this.scoreView);
+        this.gameController = new Game(this.ballBox);
         store.dispatch(START_GAME);
 
         this.startAnimation();
