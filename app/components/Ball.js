@@ -20,12 +20,12 @@ class Ball extends Drawable {
         this.radius = radius;
         this.color = color || randomPick(COLOR_LIST);
 
-        this.speedX = 0;
-        this.speedY = 0;
-        this.fixed = false;
-
         this.x = x;
         this.y = y;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.fixed = false;
+
         this.trail = new CircularQueue(TRAIL_LENGTH, new TrailPoint({ x, y }));
     }
 

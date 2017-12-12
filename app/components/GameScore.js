@@ -3,7 +3,7 @@ import OutlineText from './OutlineText';
 import store from '../redux/store';
 import { SCORE_TOP_MARGIN, SCORE_FONT_SIZE } from '../config.json';
 
-const OUT_POSITION = -(SCORE_FONT_SIZE  / 2 + 10);
+const OUT_POSITION = -(SCORE_FONT_SIZE  / 2 + 20);
 const IN_POSITION = SCORE_TOP_MARGIN + SCORE_FONT_SIZE  / 2;
 
 class GameScore extends OutlineText {
