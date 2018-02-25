@@ -2,15 +2,16 @@ import store from '../redux/store';
 import { INCREASE_SCORE, RESET_SCORE } from '../redux/actions';
 import { Ball } from '../components';
 import { randomRange } from '../utils';
+import { window } from '../browserGlobals';
 import {
     BALL_RADIUS,
     MAX_INITIAL_SPEED_X,
     TAP_IMPULSE,
     TAP_ANGLE,
-    HIT_AREA_SCALE,
- } from '../config.json';
+    HIT_AREA_RADIUS,
+} from '../config.json';
 
-const HIT_DISTANCE2 = Math.pow(HIT_AREA_SCALE * BALL_RADIUS, 2);
+const HIT_DISTANCE2 = HIT_AREA_RADIUS ** 2;
 const DEG_TO_RAD = Math.PI / 180;
 
 class Game {
@@ -41,15 +42,14 @@ class Game {
     }
 
     addNewBall() {
-        this.ballBox.addBall(
-            new Ball(
-                Math.random() * (this.ballBox.width - 2 * BALL_RADIUS) + BALL_RADIUS,
-                -BALL_RADIUS,
-                BALL_RADIUS,
-                Math.random() * 2 * MAX_INITIAL_SPEED_X - MAX_INITIAL_SPEED_X,
-                0
-            )
+        const newBall = new Ball(
+            Math.random() * (this.ballBox.width - 2 * BALL_RADIUS) + BALL_RADIUS,
+            -BALL_RADIUS,
+            BALL_RADIUS,
+            Math.random() * 2 * MAX_INITIAL_SPEED_X - MAX_INITIAL_SPEED_X,
+            0,
         );
+        this.ballBox.addBall(newBall);
     }
 
     startGame() {
@@ -77,10 +77,9 @@ class Game {
     }
 
     onInteraction(event, data) {
-        const [ x, y ] = data;
+        const [x, y] = data;
         for (let i = 0; i < this.ballBox.balls.length; i += 1) {
             const ball = this.ballBox.balls[i];
-            const d2 = ball.distance2(x, y);
 
             if (ball.distance2(x, y) <= HIT_DISTANCE2) {
                 const angle = randomRange(TAP_ANGLE[0], TAP_ANGLE[1]) * DEG_TO_RAD;
