@@ -1,5 +1,5 @@
 import store from '../redux/store';
-import { INCREASE_SCORE, RESET_SCORE } from '../redux/actions';
+import { INCREASE_SCORE, RESET_SCORE, START_GAME, END_GAME } from '../redux/actions';
 import { Ball } from '../components';
 import { randomRange } from '../utils';
 import { window } from '../browserGlobals';
@@ -9,7 +9,7 @@ import {
     TAP_IMPULSE,
     TAP_ANGLE,
     HIT_AREA_RADIUS,
-} from '../config.json';
+} from '../config.js';
 
 const HIT_DISTANCE2 = HIT_AREA_RADIUS ** 2;
 const DEG_TO_RAD = Math.PI / 180;
@@ -64,19 +64,27 @@ class Game {
     }
 
     gameLoop(timestamp) {
+        this.gameLoopId = window.requestAnimationFrame(this.gameLoop);
+
+        console.log('gameLoop');
         const delta = this.lastTimestamp ? timestamp - this.lastTimestamp : 0;
         this.lastTimestamp = timestamp;
         this.ballBox.animationStep(delta / 1000);
 
-        this.gameLoopId = window.requestAnimationFrame(this.gameLoop);
+        if (this.ballBox.ballsOffScreen().length) {
+            store.dispatch(END_GAME);
+            store.dispatch(START_GAME);
+        }
     }
 
     stopGame() {
+        console.log('stopGame');
         window.cancelAnimationFrame(this.gameLoopId);
         this.gameLoopId = null;
     }
 
     onInteraction(event, data) {
+        console.log('Balls', this.ballBox.children.length);
         const [x, y] = data;
         for (let i = 0; i < this.ballBox.balls.length; i += 1) {
             const ball = this.ballBox.balls[i];

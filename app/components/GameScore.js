@@ -1,7 +1,7 @@
 import { TweenLite } from 'gsap';
 import OutlineText from './OutlineText';
 import store from '../redux/store';
-import { SCORE_TOP_MARGIN, SCORE_FONT_SIZE } from '../config.json';
+import { SCORE_TOP_MARGIN, SCORE_FONT_SIZE } from '../config.js';
 
 const OUT_POSITION = -(SCORE_FONT_SIZE / 2 + 20);
 const IN_POSITION = SCORE_TOP_MARGIN + SCORE_FONT_SIZE / 2;
@@ -10,7 +10,7 @@ class GameScore extends OutlineText {
     constructor() {
         super('0', SCORE_FONT_SIZE);
 
-        this.gameOn = 0;
+        this.gameOn = false;
         this.interactive = false;
         this.onStateChange = this.onStateChange.bind(this);
         this.unsubscribeStore = store.subscribe(this.onStateChange);

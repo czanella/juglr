@@ -1,5 +1,5 @@
 import { Container, TextNode } from '../lightpixel';
-import { FONT } from '../config.json';
+import { FONT } from '../config.js';
 
 class OutlineText extends Container {
     constructor(text = '', size = 20) {

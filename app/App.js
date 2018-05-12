@@ -3,7 +3,7 @@ import { START_GAME } from './redux/actions';
 import { Container } from './lightpixel';
 import { BallBox, GameScore } from './components';
 import { Game } from './controllers';
-import { GRAVITY, SCORE_FONT_SIZE } from './config.json';
+import { GRAVITY, SCORE_FONT_SIZE } from './config.js';
 
 class App {
     constructor(width = 300, height = 480, view = null) {

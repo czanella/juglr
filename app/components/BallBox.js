@@ -46,7 +46,7 @@ class BallBox extends Container {
     }
 
     removeAllBalls() {
-        this.balls.forEach(this.removeChild);
+        this.balls.forEach(b => this.removeChild(b));
         this.balls = [];
     }
 
