@@ -9,6 +9,7 @@ import {
     TAP_IMPULSE,
     TAP_ANGLE,
     HIT_AREA_RADIUS,
+    NEW_BALL_INTERVAL,
 } from '../config.js';
 
 const HIT_DISTANCE2 = HIT_AREA_RADIUS ** 2;
@@ -54,11 +55,11 @@ class Game {
 
     startGame() {
         console.log('startGame');
+        this.newBallTimestamp = null;
         this.ballBox.removeAllBalls();
         this.ballBox.removeListener('mousedown', this.onInteraction);
         this.ballBox.on('mousedown', this.onInteraction);
         store.dispatch(RESET_SCORE);
-        this.addNewBall();
 
         this.gameLoopId = window.requestAnimationFrame(this.gameLoop);
     }
@@ -66,7 +67,11 @@ class Game {
     gameLoop(timestamp) {
         this.gameLoopId = window.requestAnimationFrame(this.gameLoop);
 
-        console.log('gameLoop');
+        if (!this.newBallTimestamp || timestamp - this.newBallTimestamp > NEW_BALL_INTERVAL) {
+            this.newBallTimestamp = timestamp;
+            this.addNewBall();
+        }
+       
         const delta = this.lastTimestamp ? timestamp - this.lastTimestamp : 0;
         this.lastTimestamp = timestamp;
         this.ballBox.animationStep(delta / 1000);
@@ -84,7 +89,6 @@ class Game {
     }
 
     onInteraction(event, data) {
-        console.log('Balls', this.ballBox.children.length);
         const [x, y] = data;
         for (let i = 0; i < this.ballBox.balls.length; i += 1) {
             const ball = this.ballBox.balls[i];
