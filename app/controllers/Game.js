@@ -100,8 +100,6 @@ class Game {
                 ball.speedY = -speed * Math.sin(angle);
 
                 store.dispatch(INCREASE_SCORE);
-
-                break;
             }
         }
     }

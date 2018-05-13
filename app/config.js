@@ -1,11 +1,11 @@
 const FONT = 'LCD Solid';
 const GRAVITY = 600;
 const BALL_RADIUS = 20;
-const HIT_AREA_RADIUS = 50;
+const HIT_AREA_RADIUS = 100;
 const NEW_BALL_INTERVAL = 5000;
 const MAX_INITIAL_SPEED_X = 300;
-const TAP_IMPULSE = [400, 600];
-const TAP_ANGLE = [30, 150];
+const TAP_IMPULSE = [600, 900];
+const TAP_ANGLE = [60, 120];
 const SCORE_FONT_SIZE = 80;
 const SCORE_TOP_MARGIN = 20;
 
