@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'LCD Solid';
+    src: url('LCDSolid.eot');
+    src: url('LCDSolid.eot?#iefix') format('embedded-opentype'),
+        url('LCDSolid.woff2') format('woff2'),
+        url('LCDSolid.woff') format('woff'),
+        url('LCDSolid.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

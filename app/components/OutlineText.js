@@ -1,4 +1,5 @@
 import { Container, TextNode } from '../lightpixel';
+import { FONT } from '../config.js';
 
 class OutlineText extends Container {
     constructor(text = '', size = 20) {
@@ -8,30 +9,33 @@ class OutlineText extends Container {
             text,
             size,
             '#ff0000',
-            'LCD Solid',
+            FONT,
             'center',
             'middle',
             10
         );
+        this.red.interactive = true;
 
         this.black = new TextNode(
             text,
             size,
             '#000000',
-            'LCD Solid',
+            FONT,
             'center',
             'middle',
             4
         );
+        this.black.interactive = false;
 
         this.white = new TextNode(
             text,
             size,
             '#ffffff',
-            'LCD Solid',
+            FONT,
             'center',
             'middle'
         );
+        this.white.interactive = false;
 
         this.addChild(this.red);
         this.addChild(this.black);
@@ -42,6 +46,10 @@ class OutlineText extends Container {
         this.red.text = value;
         this.black.text = value;
         this.white.text = value;
+    }
+
+    get text() {
+        return this.white.text;
     }
 }
 

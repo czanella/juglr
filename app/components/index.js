@@ -1,11 +1,13 @@
-import BackgroundSprite from './BackgroundSprite.js';
-import Ball from './Ball.js';
-import BallBox from './BallBox.js';
-import OutlineText from './OutlineText.js';
+import BackgroundSprite from './BackgroundSprite';
+import Ball from './Ball';
+import BallBox from './BallBox';
+import OutlineText from './OutlineText';
+import GameScore from './GameScore';
 
 export {
     BackgroundSprite,
     Ball,
     BallBox,
     OutlineText,
+    GameScore,
 };

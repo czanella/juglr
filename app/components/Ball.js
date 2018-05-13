@@ -14,18 +14,18 @@ const TRAIL_LENGTH = 20;
 const TWO_PI = 2 * Math.PI;
 
 class Ball extends Drawable {
-    constructor (x = 0, y = 0, radius = 10, color = null) {
+    constructor (x = 0, y = 0, radius = 10, speedX = 0, speedY = 0, color = null) {
         super();
 
         this.radius = radius;
         this.color = color || randomPick(COLOR_LIST);
 
-        this.speedX = 0;
-        this.speedY = 0;
-        this.fixed = false;
-
         this.x = x;
         this.y = y;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.fixed = false;
+
         this.trail = new CircularQueue(TRAIL_LENGTH, new TrailPoint({ x, y }));
     }
 
@@ -60,7 +60,7 @@ class Ball extends Drawable {
         this.trail.add(new TrailPoint({ x, y }, this.trail.head()));
     }
 
-    applyGravity (delta, gravityX, gravityY) {
+    applyGravity(delta, gravityX, gravityY) {
         if (!this.fixed) {
             this.speedX += gravityX * delta;
             this.speedY += gravityY * delta;
@@ -70,6 +70,17 @@ class Ball extends Drawable {
                 this.y + this.speedY * delta,
             );
         }
+    }
+
+    distance2(x, y) {
+        const dx = this.x - x;
+        const dy = this.y - y;
+
+        return dx * dx + dy * dy;
+    }
+
+    distance(x, y) {
+        return Math.sqrt(this.distance2(x, y));
     }
 }
 
