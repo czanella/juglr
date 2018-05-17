@@ -7,7 +7,7 @@ import { GRAVITY, SCORE_FONT_SIZE } from './config.js';
 
 class App {
     constructor(width = 300, height = 480, view = null) {
-        // Initializes the game view (canvas)
+        // Initializes the app view (canvas)
         this.view = view || document.createElement('canvas');
         this.view.width = width;
         this.view.height = height;
