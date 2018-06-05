@@ -13,12 +13,15 @@ class IntroView extends Container {
 
         this.playButton = new IntroButton('PLAY');
         this.playButton.y = 15;
+        this.playButton.on('mousedown', () => console.log('play'));
 
         this.settingsButton = new IntroButton('SETTINGS');
         this.settingsButton.y = 105;
+        this.settingsButton.on('mousedown', () => console.log('settings'));
 
         this.aboutButton = new IntroButton('ABOUT');
         this.aboutButton.y = 195;
+        this.aboutButton.on('mousedown', () => console.log('about'));
 
         this.addChild(this.title);
         this.addChild(this.playButton);

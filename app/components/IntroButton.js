@@ -51,12 +51,11 @@ class IntroButton extends Drawable {
         if (this.isInteractive) {
             matrix = this.stackTransform(matrix);
             position = matrix.transform(position);
-            
+
             if (position[0] >= -INTRO_BUTTON_WIDTH / 2 &&
                 position[0] < INTRO_BUTTON_WIDTH / 2 &&
                 position[1] >= -INTRO_BUTTON_HEIGHT / 2 &&
-                position[1] < INTRO_BUTTON_HEIGHT) {
-
+                position[1] < INTRO_BUTTON_HEIGHT / 2) {
                 this.emit(eventType, eventType, position);
 
                 return true;
