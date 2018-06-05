@@ -1,9 +1,9 @@
 import store from './redux/store';
 import { START_GAME } from './redux/actions';
 import { Container } from './lightpixel';
-import { BallBox, GameScore } from './components';
+import { BallBox, GameScore, IntroView } from './components';
 import { Game } from './controllers';
-import { GRAVITY, SCORE_FONT_SIZE } from './config.js';
+import { GRAVITY } from './config';
 
 class App {
     constructor(width = 300, height = 480, view = null) {
@@ -42,13 +42,19 @@ class App {
         this.scoreView = new GameScore();
         this.scoreView.x = this.view.width / 2;
 
+        // Builds the intro view
+        this.introView = new IntroView();
+        this.introView.x = this.view.width / 2;
+        this.introView.y = this.view.height / 2;
+
         // Builds the stage
         this.stage = new Container();
         this.stage.addChild(this.ballBox);
         this.stage.addChild(this.scoreView);
+        this.stage.addChild(this.introView);
 
         // Starts the game
-        this.gameController = new Game(this.ballBox);
+        // this.gameController = new Game(this.ballBox);
         this.startAnimation();
 
         window.setTimeout(() => {

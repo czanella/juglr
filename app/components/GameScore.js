@@ -1,7 +1,7 @@
 import { TweenLite } from 'gsap';
 import OutlineText from './OutlineText';
 import store from '../redux/store';
-import { SCORE_TOP_MARGIN, SCORE_FONT_SIZE } from '../config.js';
+import { SCORE_TOP_MARGIN, SCORE_FONT_SIZE } from '../config';
 
 const OUT_POSITION = -(SCORE_FONT_SIZE / 2 + 20);
 const IN_POSITION = SCORE_TOP_MARGIN + SCORE_FONT_SIZE / 2;

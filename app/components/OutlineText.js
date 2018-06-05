@@ -1,5 +1,5 @@
 import { Container, TextNode } from '../lightpixel';
-import { FONT } from '../config.js';
+import { FONT } from '../config';
 
 class OutlineText extends Container {
     constructor(text = '', size = 20) {
@@ -12,7 +12,7 @@ class OutlineText extends Container {
             FONT,
             'center',
             'middle',
-            10
+            10,
         );
         this.red.interactive = true;
 
@@ -23,7 +23,7 @@ class OutlineText extends Container {
             FONT,
             'center',
             'middle',
-            4
+            4,
         );
         this.black.interactive = false;
 

@@ -10,7 +10,7 @@ import {
     TAP_ANGLE,
     HIT_AREA_RADIUS,
     NEW_BALL_INTERVAL,
-} from '../config.js';
+} from '../config';
 
 const HIT_DISTANCE2 = HIT_AREA_RADIUS ** 2;
 const DEG_TO_RAD = Math.PI / 180;
